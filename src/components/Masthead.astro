@@ -1,0 +1,33 @@
+---
+const isProd = import.meta.env.PROD
+const baseAssetUrl = isProd
+  ? 'https://craftzdog.global.ssl.fastly.net/uses'
+  : ''
+---
+
+<section class="relative mb-6 h-80 flex justify-center items-center">
+  <div class="absolute w-full h-full overflow-hidden">
+    <video
+      class="absolute min-w-full w-auto min-h-full h-auto left-1/2 top-1/2 object-cover -translate-x-1/2 -translate-y-1/2 opacity-30"
+      poster="/demon.jpg"
+      autoplay="autoplay"
+      muted="muted"
+      loop="loop"
+      playsinline
+      ><source
+        src={baseAssetUrl + '/back_head.webm'}
+        type="video/webm; codecs=vp9"
+      />
+      <source
+        src={baseAssetUrl + '/back_head.mp4'}
+        type="video/mp4; codecs=hvc1"
+      />
+    </video>
+  </div>
+  <div class="z-10 text-center px-8 drop-shadow-lg shadow-black">
+    <div class="uppercase text-sm mb-4">Welcome to</div>
+    <div class="text-4xl font-mplus font-medium">
+      Mbull <span class="text-teal-500">PES 2021</span> Installation House
+    </div>
+  </div>
+</section>

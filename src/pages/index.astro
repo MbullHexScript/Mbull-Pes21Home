@@ -1,0 +1,82 @@
+---
+import type { ImageMetadata } from 'astro';
+import BaseHead from '../components/BaseHead.astro'
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+import { SITE_TITLE, SITE_DESCRIPTION, HOMEPAGE_URL } from '../config'
+import Body from '../components/Body.astro'
+import Content from '../components/Content.astro'
+import { IoArrowForward } from 'react-icons/io5'
+import Masthead from '../components/Masthead.astro'
+import { Image } from 'astro:assets';
+import CreatedWithSection from '../components/CreatedWithSection.astro'
+
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/*.{jpeg,jpg,png,gif}');
+console.log('images:', images)
+
+const posts = Object.values(import.meta.glob('./posts/*.md', {eager: true})).sort(
+  (a: any, b: any) =>
+    new Date(b.frontmatter.createdAt).valueOf() -
+    new Date(a.frontmatter.createdAt).valueOf()
+)
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <Body>
+    <Header title={SITE_TITLE} />
+    <main class="pt-[56px]">
+      <Masthead />
+      <Content>
+        <section>
+          <p class="mb-8 indent-4 text-justify">
+            Sebagai Mahasiswa yang suka maini game PES 2021. Gw udah banyak banget waktu gw abisin di depan layar buat nyari, ngetes, dan ngebagiin tips terbaik buat komunitas. Website ini gw jadiin tempat utama buat share tools, patch, sama tutorial yang biasa gw pake sendiri.
+            Tiap kali gw upload video baru, pasti ada aja yang nanya: “Bang, pake mod apa? Patch yang mana? Cara install-nya gimana?” Nah, semua jawaban itu gw kumpulin di sini — lengkap sama review & link download.
+            Harapan gw, isi website ini bisa bantu lo semua — baik yang masih baru nyobain modding, atau yang udah lama ngulik PES. Gas terus 🔥 biar pengalaman main PES 2021 jadi makin Perfect ⚽
+            <a
+              class="inline-flex items-center gap-1 indent-1 text-teal-500"
+              href={HOMEPAGE_URL}
+              >Learn more about me <IoArrowForward className="inline" />
+            </a>
+          </p>
+        </section>
+        <section>
+          <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {
+              posts.map(post => {
+                const heroImageAsset = images[post.frontmatter.heroImage]
+                const heroImageSrc =  heroImageAsset ? heroImageAsset() : post.frontmatter.heroImage
+                return (
+                <li class="text-center mb-4">
+                  <a href={post.url}>
+                    <Image
+                      class="border border-slate-300 dark:border-zinc-700 rounded-xl"
+                      src={heroImageSrc}
+                      width={720}
+                      height={720 / 1.777}
+                      alt="Thumbnail"
+                    />
+                    <div class="mt-3 text-xl font-bold">
+                      {post.frontmatter.title}
+                    </div>
+                    {post.frontmatter.description && (
+                      <div class="opacity-70">
+                        {post.frontmatter.description}
+                      </div>
+                    )}
+                  </a>
+                </li>
+              )
+              })
+            }
+          </ul>
+        </section>
+        <CreatedWithSection />
+      </Content>
+    </main>
+    <Footer />
+  </Body>
+</html>
