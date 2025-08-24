@@ -5,10 +5,11 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://astro.build/config
 export default defineConfig({
-  site: '',
+  site: 'https://mbull-pes21-home.vercel.app',
   integrations: [sitemap(), react()],
   markdown: {},
   vite: {
     plugins: [tailwindcss()]
   }
 })
+
