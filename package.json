@@ -8,8 +8,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "live-import": "node --experimental-vm-modules tools/import.mjs"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.1",
